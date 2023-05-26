@@ -1,0 +1,71 @@
+# Build configuration and dependencies
+[build-system]
+requires = ["setuptools >= 53.0.0"]
+build-backend = "setuptools.build_meta"
+
+# General project configuration
+# [SetupTools documentation](https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html)
+[project]
+name="logger"
+description="testing of logging"
+dynamic=["version"]
+
+
+# Project dependencies
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "coverage",
+    ]
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+    ]
+
+# Dynamic project configurations
+[tool.setuptools.dynamic]
+version = {attr = "logger.version"}
+
+# PyTest Configuration
+# [Documentation](https://docs.pytest.org/en/7.3.x/reference/customize.html)
+[tool.pytest.ini_options]
+ addopts = [
+     "-v", 
+     "--strict-markers", # Unknown markers result in errors instead of warnings
+     "--strict-config",
+     "-ra", # This options makes sure that expected failure and skips reasons are displayed
+     ]
+# Use markers to target test for exection
+ markers = [
+     ]
+# This enables live-logging so that logs will be printed during run
+# use --log-level=[DEBUG|TRACE] when runnig tests form cmdl to show output
+log_cli = true
+
+# Coverage Configuration 
+# [documentation](https://coverage.readthedocs.io/en/7.2.5/config.html)
+[tool.coverage.run]
+branch = true
+source = [
+    "logger",
+    "./tests",
+    ]
+omit = [
+    ]   
+
+[tool.coverage.report]
+exclude_lines = [ 
+    "pragma: no cover",
+    "if __name__ == .__main__.:"
+    ]
+
+[tool.coverage.html]
+directory = "htmlcov" # This is default, but now explicit
+
+[tool.coverage.xml]
+output = "coverage.xml" # This is default, but now explicit
+
+
+
+
+
